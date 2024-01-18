@@ -7,6 +7,13 @@ const
 
 http.createServer((req, res) => { 
 
+  //abort favicon request
+  if(req.url.includes('favicon.ico')){
+    res.statusCode = 404;
+    res.end('Not found');
+    return;
+  }
+
   console.log(req.url);
   const nameArg = capitalize(req.url.replace(/[^\w.,-]/g, ' ').replace(/\s+/g, ' ').trim() || 'world');
 
@@ -29,3 +36,9 @@ const capitalize = (str) => {
         .join(' ');
 }
 
+// running in development mode? 
+const DEVMODE = (process.env.NODE_ENV !== 'production');
+
+if (DEVMODE) {
+  console.log('application started in development mode');
+}
