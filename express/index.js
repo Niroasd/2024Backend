@@ -14,15 +14,21 @@ const
 
         dir: {
             root: __dirname,
-            static: __dirname + 'static' + sep
+            static: __dirname + 'static' + sep,
+            views: __dirname + 'views' + sep
         }
     };
 
 //log config options
 console.dir(cfg, {depth : null, color : true});
 
+
 //express init
 const app = express();
+
+//use EJS templates
+app.set('view engine', 'ejs');
+app.set('views', cfg.dir.views);
 
 //do not identify express
 app.disable('x-powered-by');
@@ -37,11 +43,11 @@ app.use((req, res, next) => {
 
 //home page route
 app.get('/', (req, res) => {
-    res.send('asdf');
+    res.render('message', { title: 'hiiii' });
 });
 
 app.get('/hello', (req, res) => {
-    res.send('hiii');
+    res.render('message', { title: 'hiiii again' });
 })
 
 //server static assets
@@ -49,7 +55,7 @@ app.use(express.static(cfg.dir.static));
 
 //404 error
 app.use((req, res) => {
-    res.status(404).send('Not found');
+    res.status(404).render('message', { title: 'Not found' });
 })
 
 //start server
