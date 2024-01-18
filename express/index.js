@@ -4,6 +4,7 @@ import compression from "compression";
 
 import { fileURLToPath } from "url";
 import { dirname, sep } from "path";
+import { helloRouter } from "./routes/hello.js";
 
 //config
 const __dirname = dirname(fileURLToPath( import.meta.url)) + sep;
@@ -46,9 +47,8 @@ app.get('/', (req, res) => {
     res.render('message', { title: 'hiiii' });
 });
 
-app.get('/hello', (req, res) => {
-    res.render('message', { title: 'hiiii again' });
-})
+// /hello/ route
+app.use('/hello', helloRouter);
 
 //server static assets
 app.use(express.static(cfg.dir.static));
