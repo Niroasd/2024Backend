@@ -39,6 +39,12 @@ app.use( compression() );
 
 app.use((req, res, next) => {
     console.log(req.url);
+      //abort favicon request
+    if(req.url.includes('favicon.ico')){
+        res.statusCode = 404;
+        res.end('Not found');
+        return;
+    }
     next();
 })
 
