@@ -3,7 +3,7 @@ import formidable from 'formidable';
 
 import { fileURLToPath } from 'url';
 import { dirname, parse, sep } from 'path';
-import { log } from 'console';
+import { stat, readdir, unlink } from 'fs';
 
 const app = express();
 
@@ -16,6 +16,24 @@ const
             uploads: __dirname + 'uploads' + sep
         }
     };
+
+
+readdir(cfg.dir.uploads,(err, files) => {
+    if(err){
+        console.log(err);
+    } else {
+        files.forEach(file => {
+            stat(file, (error, stats) => {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    console.log((stats.ctime) + file);
+                }
+            })
+        })
+    }
+})
 
 
 app.set('view engine', 'ejs');
@@ -33,7 +51,8 @@ app.all('/', (req, res, next) => {
         //parse uploaded file data
         const form = formidable({
             uploadDir: cfg.dir.uploads,
-            keepExtensions: true
+            keepExtensions: true,
+            multiples: false
         });
 
         form.parse(req, (err, data, files) => {
