@@ -2,8 +2,8 @@ import express from 'express';
 import formidable from 'formidable';
 
 import { fileURLToPath } from 'url';
-import { dirname, join, parse, sep, extname } from 'path';
-import { stat, readdir, unlink } from 'fs';
+import { dirname, parse, sep, } from 'path';
+import { clearFileCache } from './clearFileCache.js';
 
 const app = express();
 
@@ -14,37 +14,17 @@ const
         dir: {
             root: __dirname,
             uploads: __dirname + 'uploads' + sep
-        }
+        },
+        interval: 60000
     };
 
 
-readdir(cfg.dir.uploads, (err, files) => {
-    const dateTime = Date.now();
-    const dayInMs = 86400000;
+// Checking for uploads folder purging every interval, defined in conf.
+const clearFileCacheInterval = setInterval(clearFileCache, cfg.interval, cfg.dir.uploads);
 
-    console.log(dateTime);
-    if (err) {
-        console.log(err);
-    } else {
-        try {
-            files.forEach(file => {
-                const filePath = join(cfg.dir.uploads, file)
-                stat(filePath, (error, stats) => {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log((stats.birthtimeMs) + ' ' + filePath);
-                        if ((dateTime - stats.birthtimeMs >= dayInMs) && (extname(filePath) === ('.jpg' || '.png'))) {
-                            console.log(`older than 24h`);
-                        }
-                    }
-                });
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    }
-});
+setTimeout(() => {
+    clearFileCacheInterval
+}, 1000);
 
 
 app.set('view engine', 'ejs');
