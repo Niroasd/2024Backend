@@ -2,7 +2,7 @@ import express from 'express';
 import formidable from 'formidable';
 
 import { fileURLToPath } from 'url';
-import { dirname, parse, sep } from 'path';
+import { dirname, join, parse, sep } from 'path';
 import { stat, readdir, unlink } from 'fs';
 
 const app = express();
@@ -18,17 +18,18 @@ const
     };
 
 
-readdir(cfg.dir.uploads,(err, files) => {
-    if(err){
+readdir(cfg.dir.uploads, (err, files) => {
+    if (err) {
         console.log(err);
     } else {
         files.forEach(file => {
-            stat(file, (error, stats) => {
-                if(error){
+            const filePath = join(cfg.dir.uploads, file)
+            stat(filePath, (error, stats) => {
+                if (error) {
                     console.log(error);
                 }
-                else{
-                    console.log((stats.ctime) + file);
+                else {
+                    console.log((stats.ctime) + ' ' + filePath);
                 }
             })
         })
@@ -41,6 +42,11 @@ app.set('views', 'views');
 
 //static assets
 app.use(express.static(cfg.dir.uploads));
+
+app.get('/', (req, res, next) => {
+    console.log(`new request: ${req.url}`);
+    next();
+})
 
 
 //render form
