@@ -9,8 +9,8 @@ const app = express();
 const
     __dirname = dirname(fileURLToPath(import.meta.url)) + sep,
     cfg = {
-        dataPath : __dirname + `questions.json`,
-        port : process.env.PORT || 3000,
+        dataPath: __dirname + `questions.json`,
+        port: process.env.PORT || 3000,
     }
 
 //fetch urls to general, computer, gadgets categories.
@@ -43,7 +43,7 @@ const fetchTrivia = async () => {
 
 const writeTriviaToFile = async () => {
     await writeFile(cfg.dataPath, JSON.stringify(question), err => {
-        if(err){
+        if (err) {
             console.log(err);
         } else {
             console.log(`wrote to file.`);
@@ -51,6 +51,4 @@ const writeTriviaToFile = async () => {
     })
 }
 
-
 fetchTrivia();
-
