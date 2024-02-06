@@ -1,11 +1,15 @@
 import express from 'express';
 import { writeFile } from 'fs/promises';
+import { dirname, parse, sep, } from 'path';
+import { fileURLToPath } from 'url';
 
 
 const app = express();
 
 const
+    __dirname = dirname(fileURLToPath(import.meta.url)) + sep,
     cfg = {
+        dataPath : __dirname + `questions.json`,
         port : process.env.PORT || 3000,
     }
 
@@ -29,9 +33,22 @@ const fetchTrivia = async () => {
     const possibleAnswers = questionData.incorrect_answers;
 
     console.log('Question:', question);
+    console.log(`Possible answers : `, possibleAnswers);
     console.log(`Correct answer : `, correctAnswer);
 
     console.log(data);
+
+    return questionData;
+}
+
+const writeTriviaToFile = async () => {
+    await writeFile(cfg.dataPath, JSON.stringify(question), err => {
+        if(err){
+            console.log(err);
+        } else {
+            console.log(`wrote to file.`);
+        }
+    })
 }
 
 
