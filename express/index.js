@@ -8,6 +8,7 @@ import { helloRouter } from "./routes/hello.js";
 
 //config
 const __dirname = dirname(fileURLToPath( import.meta.url)) + sep;
+const multiArray = ['first', 'second', 'third'];
 
 const
     cfg = {
@@ -52,6 +53,10 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
     res.render('message', { title: 'hiiii' });
 });
+
+app.get('/multi', (req, res) => {
+    res.render('message', {title: 'a', multiArray: multiArray});
+})
 
 // /hello/ route
 app.use('/hello', helloRouter);
