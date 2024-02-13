@@ -26,7 +26,7 @@ const clearFileCache = async (dirPath) => {
                             if ((dateTime - stats.birthtimeMs >= dayInMs) && (extname(filePath) === ('.jpg' || '.png'))) {
                                 console.log(`older than 24h`);
                                 unlink(filePath, (err) => {
-                                    if(err) throw err;
+                                    if (err) throw err;
                                     console.log(`${filePath} deleted`);
                                 })
                             }

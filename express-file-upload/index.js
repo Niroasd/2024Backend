@@ -29,8 +29,8 @@ const
 const clearFileCacheInterval = setInterval(clearFileCache, cfg.interval, cfg.dir.uploads);
 
 //custom validation
-const validateJobTitles = check('job').isIn(validJobTitles)
-    .withMessage('Job must be one of these: Junior developer, Developer, or Senior Developer');
+// const validateJobTitles = check('job').isIn(validJobTitles)
+    // .withMessage('Job must be one of these: Junior developer, Developer, or Senior Developer');
 
 setTimeout(() => {
     clearFileCacheInterval
@@ -54,7 +54,7 @@ app.get('/', (req, res) => {
 
 
 //render form
-app.post('/', validateJobTitles, (req, res, next) => {
+app.post('/', [check('job').isIn(validJobTitles).withMessage('wrong job title')], (req, res, next) => {
 
     // parse uploaded file data
     const form = formidable({
@@ -69,6 +69,7 @@ app.post('/', validateJobTitles, (req, res, next) => {
             return;
         }
 
+        // console.log(data);
 
         console.log(`New ${req.method} request: ${req.url}`);
         console.log('Request body:', data);
