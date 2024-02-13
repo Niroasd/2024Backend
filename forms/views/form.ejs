@@ -29,6 +29,11 @@
   </div>
 
   <div>
+    <label for="email">email</label>
+    <input type="email" id="email" name="email" value="<%= data.email %>" pattern="^[\w-]+@([\w-]+\.)+[\w-]{2,4}$" />
+  </div>
+
+  <div>
     <label for="nodejs">like Node.js?</label>
     <input type="checkbox" id="nodejs" name="nodejs" value="yes"<% if (data.nodejs) { %> checked<% } %> />
   </div>
