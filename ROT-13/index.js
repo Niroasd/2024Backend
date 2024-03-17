@@ -24,7 +24,7 @@ const decypher = (word) => {
       alphabet.output.indexOf(char)
     )
   }).join('');
-  }
+}
 
 // use EJS templates
 app.set('view engine', 'ejs');
@@ -34,7 +34,7 @@ app.set('views', 'views');
 app.get('/', (req, res) => {
   console.log(req.query.isEnc);
   decypher(req.query.name)
-  
+
   res.render('form', {
     title: decypher(req.query.name),
     data: req.query,
@@ -43,5 +43,5 @@ app.get('/', (req, res) => {
 
 // start server
 app.listen(cfg.port, () => {
-  console.log(`Example app listening at http://localhost:${ cfg.port }`);
+  console.log(`Example app listening at http://localhost:${cfg.port}`);
 });
