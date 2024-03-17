@@ -1,30 +1,13 @@
-// Express.js application
 import express from 'express';
+import { encode, decode } from './modules/rot13.js';
 
 // configuration
 const cfg = {
   port: process.env.PORT || 3000
 };
 
-const alphabet = {};
-
-alphabet.input = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
-alphabet.output = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm"
-const name = ''
-
 // Express initiation
 const app = express();
-
-const decypher = (word) => {
-  return Array.from(word).map(char => {
-    // console.log(alphabet.input.charAt(
-    //   alphabet.output.indexOf(char)
-    // ));
-    return alphabet.input.charAt(
-      alphabet.output.indexOf(char)
-    )
-  }).join('');
-}
 
 // use EJS templates
 app.set('view engine', 'ejs');
@@ -32,12 +15,27 @@ app.set('views', 'views');
 
 // render form
 app.get('/', (req, res) => {
-  console.log(req.query.isEnc);
-  decypher(req.query.name)
-
   res.render('form', {
-    title: decypher(req.query.name),
+    title: 'ROT13 Encoder/Decoder',
     data: req.query,
+  });
+});
+
+// handle encoding
+app.get('/encode', (req, res) => {
+  const encodedText = encode(req.query.text);
+  res.render('form', {
+    title: 'Encoded Text:',
+    data: { encoded: encodedText },
+  });
+});
+
+// handle decoding
+app.get('/decode', (req, res) => {
+  const decodedText = decode(req.query.text);
+  res.render('form', {
+    title: 'Decoded Text:',
+    data: { decoded: decodedText },
   });
 });
 

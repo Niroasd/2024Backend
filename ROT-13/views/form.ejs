@@ -1,53 +1,24 @@
-<%- include('partials/_htmlhead'); -%>
-
-  <h1>
-    <%= title %>
-  </h1>
-
-  <% if (data) { %>
-
-    <p>Data received in last request:</p>
-
-    <table>
-      <% for (const name in data) { %>
-        <tr>
-          <th>
-            <%= name %>:
-          </th>
-          <td>
-            <%= data[name] %>
-          </td>
-        </tr>
-        <% } %>
-    </table>
-
-    <% } %>
-
-      <p>Submission form:</p>
-
-      <form action="/" method="get">
-
-        <div>
-          <label for="name">name</label>
-          <input type="text" id="name" name="name" value="<%= data.name %>" />
-        </div>
-
-        <div>
-          <input type="radio" id="encrypted" name="isEnc" value="encrypted" checked />
-          <label for="encrypted">encrypted</label>
-
-          <input type="radio" id="encrypted" name="isEnc" value="not encrypted" checked />
-          <label for="not encrypted">not encrypted</label>
-        </div>
-
-        <div>
-          <label for="nodejs">like Node.js?</label>
-          <input type="checkbox" id="nodejs" name="nodejs" value="yes" <% if (data.nodejs) { %> checked<% } %> />
-        </div>
-
-
-        <button>submit</button>
-
-      </form>
-
-      <%- include('partials/_htmlfoot'); -%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ROT13 Encoder/Decoder</h1>
+    <form action="/encode" method="GET">
+        <label for="text">Insert normal text:</label><br>
+        <textarea id="text" name="text"></textarea><br>
+        <button type="submit">Encode</button>
+    </form>
+    <p>Decoded text: <%= data.encoded %></p>
+    <br>
+    <form action="/decode" method="GET">
+        <label for="encodedText">Insert encoded Text:</label><br>
+        <textarea id="encodedText" name="text"></textarea><br>
+        <button type="submit">Decode</button>
+    </form>
+    <p>Encoded text: <%= data.decoded %></p>
+</body>
+</html>
