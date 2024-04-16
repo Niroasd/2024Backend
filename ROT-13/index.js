@@ -1,5 +1,5 @@
-import express from 'express';
-import { encode, decode } from './modules/rot13.js';
+const express = require('express');
+const { encode, decode } = require('./modules/rot13.mjs');
 
 // configuration
 const cfg = {

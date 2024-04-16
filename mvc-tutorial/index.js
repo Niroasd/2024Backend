@@ -23,4 +23,4 @@ app.set('view engine', 'ejs');
 app.use('/', router);
 
 
-app.listen(cfg.port, console.log(`Running on ${cfg.port}`));
+app.listen(cfg.port, console.log(`Running on http://localhost:${cfg.port}`));

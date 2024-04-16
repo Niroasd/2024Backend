@@ -2,7 +2,7 @@
   "name": "express",
   "version": "1.0.0",
   "description": "Example ROT-13",
-  "type": "module",
+  "type": "commonjs",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"

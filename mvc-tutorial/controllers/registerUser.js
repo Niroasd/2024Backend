@@ -1,3 +1,6 @@
+import { User } from "../models/User.js";
+import bcrypt from "bcryptjs";
+
 //js
 //Post Request that handles Register
 export const registerUser = (req, res) => {
